@@ -13,7 +13,7 @@ Requisitos para execução:
 A escolha da base de dados a ser analisada é feita no código dentro do arquivo kmeans.py, na função __init, na inicialização do DataReader
 Os parâmetros são: DataReader("NomeDoArquivo", IgnoreStart, IgnoreEnd, "Separator"), onde:
 
-NomeDoArquivo é o nome do arquivo que contém os dados
-IgnoreStart é o número de colunas a serem ignoradas no inicio de cada linha (geralmente 1 que é o identificador da instância)
-IgnoreEnd é o número de colunas a serem ignoradas no fim de cada linha (geralmente 1 que é a classe da instância)
-Separator é a cadeia de caracteres que separa cada coluna de cada linha (geralmente " " ou ",")
+- NomeDoArquivo é o nome do arquivo que contém os dados
+- IgnoreStart é o número de colunas a serem ignoradas no inicio de cada linha (geralmente 1 que é o identificador da instância)
+- IgnoreEnd é o número de colunas a serem ignoradas no fim de cada linha (geralmente 1 que é a classe da instância)
+- Separator é a cadeia de caracteres que separa cada coluna de cada linha (geralmente " " ou ",")
