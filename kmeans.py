@@ -9,9 +9,6 @@ from rand import get_tp_fp_tn_fn
 class KMeans:
 
     def __init__(self):
-        # self.reader = DataReader("seeds_dataset.txt", 0, 1, "	")
-        # self.reader = DataReader("bezdekIris.data", 0, 1, ",")
-        # self.reader = DataReader("glass.data", 1, 1, ",")
         self.reader = DataReader("yeast.data", 1, 1, " ")
 
         self.pts, self.mini, self.maxi, self.dimens, self.classes = self.reader.getPoints()
@@ -140,26 +137,15 @@ class KMeans:
                 matrix_line.append(array_of_classes.count(possible_class))
             cooccurrence_matrix.append(matrix_line)
 
-        # print(cooccurrence_matrix)
-
         import numpy as np
         array_matrix = np.array(cooccurrence_matrix)
 
         tp, fp, tn, fn = get_tp_fp_tn_fn(array_matrix)
 
-        # print ("TP: %d, FP: %d, TN: %d, FN: %d" % (tp, fp, tn, fn))
-
-        # Print the measures:
-        # print ("Rand index: %f" % (float(tp + tn) / (tp + fp + fn + tn)))
-
         rand_index = float(tp + tn) / (tp + fp + fn + tn)
 
         precision = float(tp) / (tp + fp)
         recall = float(tp) / (tp + fn)
-
-        # print ("Precision : %f" % precision)
-        # print ("Recall    : %f" % recall)
-        # print ("F1        : %f" % ((2.0 * precision * recall) / (precision + recall)))
 
         return rand_index
 
@@ -171,9 +157,7 @@ class KMeans:
         # All the others are coordinates
         # Example (3, x1,y1,z1, x2,y2,z2, x3,y3,z3)
 
-        # print(args)
         self.clusters = []
-        # self.randomClusters(3)
 
         iters = int(args[0])
 
@@ -192,23 +176,7 @@ class KMeans:
             # self.recalculateCentroids()
             i += 1
 
-        # self.printClusters()
 
         rand_index = self.rand_index()
-        #
-        # return rand_index, 1-rand_index
 
-        # print(rand_index)
         return rand_index
-
-# km = KMeans()
-# num_of_centroids = 3
-# params = []
-#
-# for i in range(0, num_of_centroids):
-#     for n, x in zip(km.mini, km.maxi):
-#         params.append(uniform(n, x))
-
-# arguments = [num_of_centroids, ]
-# arguments.extend(params)
-# print(km.execute(arguments))

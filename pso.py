@@ -5,16 +5,14 @@ import time
 from kmeans import KMeans
 from particle import Particle
 
-max_iterations = 128
+max_iterations = 8
 population_size = 128
-velocity_parameter_1 = 0.03125
-velocity_parameter_2 = 0.03125
+velocity_parameter_1 = 0.125
+velocity_parameter_2 = 0.125
 error_criterion = 0.00000001
 dimensions = 3
 
 for tests in range(0, 4):
-
-    print("=====================")
 
     precisions = []
     times = []
@@ -37,8 +35,6 @@ for tests in range(0, 4):
 
             plist = [num_clusters, ]
             plist.extend([random.uniform(0, 10) for i in range(0, k_means.dimens * 7)])
-
-            # print(plist)
 
             p.current_position = array(plist)
             p.best_position = p.current_position
@@ -75,7 +71,6 @@ for tests in range(0, 4):
         while i < max_iterations:
             for j, p in enumerate(particles):
 
-                # print (p.current_position)
                 fitness = k_means.execute(p.current_position.tolist())
                 error = 1-fitness
 
@@ -90,31 +85,11 @@ for tests in range(0, 4):
                         + velocity_parameter_2 * random.uniform(1, 10) * (global_best.current_position - p.current_position)
 
                 p.current_position = p.current_position + v
-                # print(str(j) + "::" + "::" + str(p.fitness))
 
             i += 1
 
-            # printParticles()
-
-            # print(i)
-            # print(global_best.current_position)
-            # print(global_best.fitness)
-
             if error < error_criterion:
                 break
-
-        # print ('\nOtimização Por Enxame De Partículas\n')
-        # print ('-'*9, 'PARAMETROS\n','-'*9)
-        # print ('Tamanho da População : ', population_size)
-        # print ('Número de Dimensões  : ', len(particles[0].current_position))
-        # print ('Criterio de Erro     : ', error_criterion)
-        # print ('Param de Velocidade 1: ', velocity_parameter_1)
-        # print ('Param de Velocidade 2: ', velocity_parameter_2)
-        #
-        # print ('-'*9, 'RESULTADOS\n', '-'*9)
-        # print ('Melhor Fitness       : ', global_best.fitness)
-        # print ('Melhor Posição       : ', global_best.current_position)
-        # print ('Numero de Iterações  : ', i+1)
 
         end_time = time.time()
         elapsed_time = end_time - start_time
@@ -135,9 +110,3 @@ for tests in range(0, 4):
     print("average precision")
     avg2 = sum(precisions) / len(precisions)
     print(avg2)
-
-    velocity_parameter_1 *= 4
-    velocity_parameter_2 *= 4
-
-    if velocity_parameter_1 > 1: velocity_parameter_1 = 1
-    if velocity_parameter_2 > 1: velocity_parameter_2 = 1
