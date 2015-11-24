@@ -1,0 +1,59 @@
+    # Inicialização das Particulas
+    Vetor_De_Particulas ENXAME
+
+    # Inicializar K-Medias
+    K_Medias KMEDIAS
+
+    para I <- 0 ate TAMANHO_DA_POPULACAO
+
+        Particula PARTICULA
+
+        # Primeiro Valor da Posição Da Partícula Representa A Quantidade De Grupos
+        # Demais Valores Representam As Coordenadas Dos Centros de Cada Grupo
+        PARTICULA.POSICAO_ATUAL <- [numero_aleatorio_de_grupos, posicao_aleatoria_com_limites(KMEDIAS.LIMITE_INFERIOR, KMEDIAS.LIMITE_SUPERIOR)]
+        PARTICULA.MELHOR_POSICAO <- PARTICULA.POSICAO_ATUAL_DA_PARTICULA
+
+        PARTICULA.MELHOR_FITNESS <- KMEDIAS.executar_com_valores_iniciais(PARTICULA.POSICAO_ATUAL)
+        PARTICULA.MOVIMENTO <- 0;
+
+        adicionar_particula_ao_enxame(PARTICULA, ENXAME)
+
+    # Inicializar variáveis globais
+    MELHOR_GLOBAL <- primeira_particula(ENXAME)
+    ERRO <- 1 - calcular_fitness(MELHOR_GLOBAL)
+
+    # Movimentação das Partículas
+    para I <- 0 ate MAXIMO_DE_ITERAÇOES
+
+        para cada PARTICULA em PARTICULAS
+
+            FITNESS_ATUAL <- KMEDIAS.executar_com_valores_iniciais(PARTICULA.POSICAO_ATUAL)
+            ERRO <- 1 - FITNESS_ATUAL
+
+            se
+                FITNESS_ATUAL > PARTICULA.MELHOR_FITNESS
+            entao
+                PARTICULA.MELHOR_FITNESS <- FITNESS_ATUAL
+                PARTICULA.MELHOR_POSICAO <- PARTICULA.POSICAO_ATUAL
+
+            se
+                FITNESS_ATUAL > MELHOR_GLOBAL.MELHOR_FITNESS
+            entao
+                MELHOR_GLOBAL <- PARTICULA
+
+            PARTICULA.MOVIMENTO <- PARTICULA.MOVIMENTO +
+                    ESCALONAMENTO_DE_VELOCIDADE * fator_aleatorio() * (PARTICULA.MELHOR_POSICAO - PARTICULA.POSICAO_ATUAL) +
+                    ESCALONAMENTO_DE_VELOCIDADE * fator_aleatorio() * (MELHOR_GLOBAL.MELHOR_POSICAO - PARTICULA.POSICAO_ATUAL)
+
+            PARTICULA.POSICAO_ATUAL <- PARTICULA.POSICAO_ATUAL + PARTICULA.MOVIMENTO
+
+        se
+            ERRO < ERRO_ACEITO
+        entao
+            sair_do_loop
+            
+    FITNESS <- MELHOR_GLOBAL.MELHOR_FITNESS
+    NUMERO_DE_GRUPOS <- MELHOR_GLOBAL.MELHOR_POSICAO[posicao 0]
+    CENTROIDES_IDEAIS <- MELHOR_GLOBAL.MELHOR_POSICAO[posicoes 1 ate fim]
+    
+    retornar FITNESS, NUMERO_DE_GRUPOS, CENTROIDES_IDEAIS

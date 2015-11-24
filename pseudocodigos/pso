@@ -1,0 +1,47 @@
+    # Inicialização das Particulas
+    Vetor_De_Particulas ENXAME
+
+    para I <- 0 ate TAMANHO_DA_POPULACAO
+
+        Particula PARTICULA
+
+        PARTICULA.POSICAO_ATUAL <- posicao_aleatoria()
+        PARTICULA.MELHOR_POSICAO <- PARTICULA.POSICAO_ATUAL_DA_PARTICULA
+        PARTICULA.MELHOR_FITNESS <- calcular_fitness(PARTICULA)
+        PARTICULA.MOVIMENTO <- 0;
+
+        adicionar_particula_ao_enxame(PARTICULA, ENXAME)
+
+    # Inicializar variáveis globais
+    MELHOR_GLOBAL <- primeira_particula(ENXAME)
+    ERRO <- 1 - calcular_fitness(MELHOR_GLOBAL)
+
+    # Movimentação das Partículas
+    para I <- 0 ate MAXIMO_DE_ITERAÇOES
+
+        para cada PARTICULA em PARTICULAS
+
+            FITNESS_ATUAL <- calcular_fitness(PARTICULA)
+            ERRO <- 1 - FITNESS_ATUAL
+
+            se
+                FITNESS_ATUAL > PARTICULA.MELHOR_FITNESS
+            entao
+                PARTICULA.MELHOR_FITNESS <- FITNESS_ATUAL
+                PARTICULA.MELHOR_POSICAO <- PARTICULA.POSICAO_ATUAL
+
+            se
+                FITNESS_ATUAL > MELHOR_GLOBAL.MELHOR_FITNESS
+            entao
+                MELHOR_GLOBAL <- PARTICULA
+
+            PARTICULA.MOVIMENTO <- PARTICULA.MOVIMENTO +
+                    ESCALONAMENTO_DE_VELOCIDADE * fator_aleatorio() * (PARTICULA.MELHOR_POSICAO - PARTICULA.POSICAO_ATUAL) +
+                    ESCALONAMENTO_DE_VELOCIDADE * fator_aleatorio() * (MELHOR_GLOBAL.MELHOR_POSICAO - PARTICULA.POSICAO_ATUAL)
+
+            PARTICULA.POSICAO_ATUAL <- PARTICULA.POSICAO_ATUAL + PARTICULA.MOVIMENTO
+
+        se
+            ERRO < ERRO_ACEITO
+        entao
+            finalizar_execucao()

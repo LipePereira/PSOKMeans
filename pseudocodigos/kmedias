@@ -1,0 +1,60 @@
+classe K_Medias
+
+    # Cálculo do Fitness de acordo com a necessidade
+    funcao calcular_fitness(Particula PARTICULA)
+        se 
+            METODO_DESEJADO <- "EXTERNO"
+        entao
+            retornar indice_de_rand(PARTICULA)
+        sentao
+            retornar funcao_objetivo(PARTICULA)
+
+
+    funcao inicializar()
+        # Inicializar Pontos
+        Lista_De_Pontos PONTOS <- ler_pontos_do_arquivo()
+        Lista_De_Coordenadas LIMITE_SUPERIOR <- menores_valores_para_cada_dimensao(PONTOS)
+        Lista_De_Coordenadas LIMITE_INFERIOR <  maiores_valores_para_cada_dimensao(PONTOS)
+    
+    funcao executar()
+        # Inicializar Grupos
+        Lista_De_Grupos GRUPOS
+        para I <- 0 ate NUMERO_DE_GRUPO
+            Grupo GRUPO
+            GRUPO.CENTROIDE <- ponto_aleatorio()
+            GRUPO.PONTOS <- lista_de_pontos_vazia()
+        
+        # Atribuição Inicial
+        para cada PONTO em PONTOS
+            colocar_ponto_em_grupo_com_centroide_mais_proximo(PONTO, GRUPOS)
+    
+        # Execução do algoritmo
+        para I <- 0 ate MAXIMO_DE_ITERACOES
+            para cada GRUPO em GRUPOS
+                recalcular_centroid_baseado_nos_pontos(GRUPO)
+            para cada PONTO em PONTOS
+                colocar_ponto_em_grupo_com_centroide_mais_proximo(PONTO, GRUPOS)
+                
+        # Retornar Fitness, Erro
+        retornar calcular_fitness(GRUPOS)
+        
+    funcao executar_com_valores_iniciais(VALORES_INICIAIS)
+        # Inicializar Grupos
+        Lista_De_Grupos GRUPOS
+        para I <- 0 ate obter_numero_de_grupos(VALORES_INICIAIS)
+            GRUPO.CENTROIDE <- obter_proximo_centroid(VALROES_INICIAIS)
+            GRUPO.PONTOS <- lista_de_pontos_vazia()
+        
+        # Atribuição Inicial
+        para cada PONTO em PONTOS
+            colocar_ponto_em_grupo_com_centroide_mais_proximo(PONTO, GRUPOS)
+        
+        # Execução do algoritmo
+        para I <- 0 ate MAXIMO_DE_ITERACOES
+            para cada GRUPO em GRUPOS
+                recalcular_centroid_baseado_nos_pontos(GRUPO)
+            para cada PONTO em PONTOS
+                colocar_ponto_em_grupo_com_centroide_mais_proximo(PONTO, GRUPOS)
+                
+        # Retornar Fitness, Erro
+        retornar calcular_fitness(GRUPOS)
